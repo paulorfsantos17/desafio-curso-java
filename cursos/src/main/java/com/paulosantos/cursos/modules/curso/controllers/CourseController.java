@@ -13,6 +13,7 @@ import com.paulosantos.cursos.modules.curso.CourseEntity;
 import com.paulosantos.cursos.modules.curso.dto.CreateCourseRequestDTO;
 import com.paulosantos.cursos.modules.curso.dto.GetAllCourseResponseDTO;
 import com.paulosantos.cursos.modules.curso.enums.Active;
+import com.paulosantos.cursos.modules.curso.usecases.ActiveCourseUseCase;
 import com.paulosantos.cursos.modules.curso.usecases.CreateCourseUseCase;
 import com.paulosantos.cursos.modules.curso.usecases.DeleteCourseUseCase;
 import com.paulosantos.cursos.modules.curso.usecases.GetAllCourseUsecase;
@@ -25,6 +26,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
@@ -39,6 +41,9 @@ public class CourseController {
 
   @Autowired
   private DeleteCourseUseCase deleteCourseUseCase;
+
+  @Autowired
+  private ActiveCourseUseCase activeCourseUseCase;
 
   @PostMapping("/")
   public ResponseEntity<Object> create(@Valid @RequestBody CreateCourseRequestDTO createCourseRequestDTO) {
@@ -92,4 +97,16 @@ public class CourseController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
   }
+
+  @PatchMapping("/{id}/active")
+  public ResponseEntity<Object> activeCourse(@PathVariable UUID id) {
+    try {
+      this.activeCourseUseCase.execute(id);
+      return ResponseEntity.status(HttpStatus.OK).build();
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+  }
+
 }
