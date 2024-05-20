@@ -3,6 +3,7 @@ package com.paulosantos.cursos.modules.curso.usecases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paulosantos.cursos.exceptions.CourseNotFoundException;
 import com.paulosantos.cursos.modules.curso.CourseRepository;
 
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class DeleteCourseUseCase {
 
   public void execute(UUID id) {
     this.courseRepository.findById(id).orElseThrow(() -> {
-      throw new RuntimeException("Cannot find course");
+      throw new CourseNotFoundException();
     });
 
     this.courseRepository.deleteById(id);

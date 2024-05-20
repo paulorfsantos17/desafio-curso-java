@@ -6,23 +6,25 @@ import org.springframework.stereotype.Service;
 import com.paulosantos.cursos.exceptions.CourseNotFoundException;
 import com.paulosantos.cursos.modules.curso.CourseEntity;
 import com.paulosantos.cursos.modules.curso.CourseRepository;
-import com.paulosantos.cursos.modules.curso.enums.Active;
+import com.paulosantos.cursos.modules.curso.dto.UpdateCourseRequestDTO;
 
 import java.util.UUID;
 
 @Service
-public class ActiveCourseUseCase {
+public class UpdateCourseUsecase {
+
   @Autowired
   private CourseRepository courseRepository;
 
-  public void execute(UUID id) {
-    CourseEntity courseEntity = this.courseRepository.findById(id).orElseThrow(() -> {
+  public void execute(UUID id, UpdateCourseRequestDTO updateCourseRequestDTO) {
+    CourseEntity course = this.courseRepository.findById(id).orElseThrow(() -> {
       throw new CourseNotFoundException();
     });
 
-    courseEntity.setActive(Active.CHECK);
+    course.setName(updateCourseRequestDTO.name());
+    course.setCategory(updateCourseRequestDTO.category());
 
-    this.courseRepository.save(courseEntity);
+    this.courseRepository.save(course);
+
   }
-
 }
