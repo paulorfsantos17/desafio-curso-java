@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.paulosantos.cursos.modules.enums.Active;
+import com.paulosantos.cursos.modules.curso.enums.Active;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.paulosantos.cursos.modules.enums;
+package com.paulosantos.cursos.modules.curso.enums;
 
 public enum Active {
       CHECK("check"),
